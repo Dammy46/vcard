@@ -25,23 +25,15 @@ const PageWrap = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const res = await fetch("/api/generate-vcard", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/generate-vcard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${form.name.replace(/\s+/g, "_")}.vcf`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    const data = await res.json();
+    setLink(data.link);
   };
+
   return (
     <div style={{ padding: 30 }}>
       <h1>Create a vCard</h1>
@@ -79,9 +71,7 @@ const PageWrap = () => {
         <div style={{ marginTop: 20 }}>
           <p>Your vCard is ready:</p>
           <a href={link} target="_blank" rel="noopener noreferrer">
-            {typeof window !== "undefined"
-              ? window.location.origin + link
-              : link}
+            {link}
           </a>
         </div>
       )}
