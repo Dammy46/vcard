@@ -18,7 +18,7 @@ END:VCARD
 
   const fileId = uuidv4();
   const encoded = encodeURIComponent(vcardContent);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = "https://vcard-vert.vercel.app";
   const link = `${baseUrl}/vcard/${fileId}.vcf?data=${encoded}`;
 
   return NextResponse.json({ link });
